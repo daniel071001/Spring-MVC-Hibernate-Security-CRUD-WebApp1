@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add user</title>
+</head>
+<body>
+<div>
+    <h2>Please add new user</h2>
+    <hr>
+    <form action="#" th:action="@{/user-add}" th:object="${user}" method="post">
+        <div>
+            <label for="name">Name</label>
+            <input type="text" th:field="*{username}" id="name" placeholder="Name">
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="text" th:field="*{password}" id="password" placeholder="Password">
+        </div>
+        <div>
+            <label for="country">Country</label>
+            <input type="text" th:field="*{country}" id="country" placeholder="Country">
+        </div>
+        <p>
+        <li th:each="role : ${allRoles}">
+            <label>
+                <input th:type="checkbox" th:name="${role}">
+                <span th:text="${role}"></span>
+            </label>
+        </li>
+        </p>
+        <div>
+            <br>
+            <input type="submit" value="Add user">
+        </div>
+    </form>
+</div>
+<hr>
+<a th:href="@{/login}"><input type="submit" value="Log out"></a>
+</body>
+</html>
