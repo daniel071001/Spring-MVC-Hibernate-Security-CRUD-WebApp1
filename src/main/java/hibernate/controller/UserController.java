@@ -59,7 +59,7 @@ public class UserController {
         return "user-add";
     }
 
-    @PostMapping("/user-add")
+    @PostMapping("/user-add")       //@RequestParam-это параметр, привязанный как параметр запроса. Этот параметр может быть необязательным, например, для применения фильтра.
     public String createUser(User user, @RequestParam Map<String, String> form){
         List<String> roles = roleDAO.getRoleNamesToList();
         Set<String> strings = new HashSet<>(roles);
@@ -73,7 +73,7 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/user-update/{id}")
+    @GetMapping("/user-update/{id}")  //PathVariable - это параметр, привязанный как параметр в url. Этот параметр должен быть информирован.
     public String updateUserForm(@PathVariable("id") long id, Model model){
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
@@ -96,7 +96,7 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    @GetMapping("user-delete/{id}")
+    @GetMapping("/user-delete/{id}")
     public String deleteUser(@PathVariable("id") long id){
         userService.removeUser(userService.getUserById(id));
         return "redirect:/admin";
