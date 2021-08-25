@@ -25,7 +25,7 @@ CREATE TABLE user_roles(
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
-INSERT INTO user_roles(user_id, role_id)
+INSERT INTO user_role(user_id, role_id)
 VALUES (1, 1),
        (2, 1),
        (2, 2);
