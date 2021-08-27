@@ -36,57 +36,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationProvider.setUserDetailsService(userDetailsService);
         return authenticationProvider;
     }
-//
-//    @Autowired
-//    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-//        auth.authenticationProvider(daoAuthenticationProvider());
-//    }
 
-    @Autowired
-    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
+   @Autowired
+   public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+       auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+       auth.authenticationProvider(daoAuthenticationProvider());
+   }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .antMatchers("/", "/login").anonymous()
-//                .antMatchers("/user").access("hasAnyRole('ROLE_USER, ROLE_ADMIN')")
-//                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-//                .anyRequest().authenticated();
-//
-//        http.formLogin()
-//                .permitAll()
-//                .successHandler(loginSuccessHandler)
-//                .usernameParameter("j_username")
-//                .passwordParameter("j_password");
-//
-//        http.logout()
-//                .permitAll()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                .logoutSuccessUrl("/")
-//                .and().csrf().disable();
-//    }
+  
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/user").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-                .antMatchers("/admin").access("hasAnyRole('ROLE_ADMIN')")
-                .antMatchers("/user-add").access("hasAnyRole('ROLE_ADMIN')")
-                .antMatchers("/add-list").access("hasAnyRole('ROLE_ADMIN')")
-                .antMatchers("/user-update/{id}").access("hasAnyRole('ROLE_ADMIN')")
-                .antMatchers("/user-update").access("hasAnyRole('ROLE_ADMIN')")
-                .antMatchers("/user-delete/{id}").access("hasAnyRole('ROLE_ADMIN')")
-                .and()
-                .formLogin()
-                .successHandler(loginSuccessHandler);
-    }
+   @Override
+   protected void configure(HttpSecurity http) throws Exception {
+       http.authorizeRequests()
+               .antMatchers("/", "/login").anonymous()
+               .antMatchers("/user").access("hasAnyRole('ROLE_USER, ROLE_ADMIN')")
+               .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+               .anyRequest().authenticated();
 
+       http.formLogin()
+               .permitAll()
+               .successHandler(loginSuccessHandler)
+               .usernameParameter("j_username")
+               .passwordParameter("j_password");
 
+       http.logout()
+               .permitAll()
+               .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+               .logoutSuccessUrl("/")
+               .and().csrf().disable();
+   }
+
+  
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
