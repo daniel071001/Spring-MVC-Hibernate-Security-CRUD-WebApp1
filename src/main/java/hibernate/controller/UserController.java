@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Controller
+@RequestMapping
 public class UserController {
 
     private final UserService userService;
